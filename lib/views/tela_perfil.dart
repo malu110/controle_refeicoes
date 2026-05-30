@@ -22,11 +22,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
   String _selectedActivity = 'Moderado';
   bool _isEditing = false;
 
-  final List<String> _goals = [
-    'Perder peso',
-    'Manter peso',
-    'Ganhar massa',
-  ];
+  final List<String> _goals = ['Perder peso', 'Manter peso', 'Ganhar massa'];
   final List<String> _activities = [
     'Sedentário',
     'Leve',
@@ -113,7 +109,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF2D6A4F).withOpacity(0.3),
+                        color: const Color(0xFF2D6A4F).withValues(alpha: 0.3),
                         blurRadius: 16,
                         offset: const Offset(0, 6),
                       ),
@@ -169,15 +165,13 @@ class _TelaPerfilState extends State<TelaPerfil> {
                       enabled: _isEditing,
                       keyboardType: TextInputType.number,
                       suffixText: 'anos',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: DropdownButtonFormField<String>(
-                      value: _selectedGender,
+                      initialValue: _selectedGender,
                       decoration: InputDecoration(
                         labelText: 'Gênero',
                         prefixIcon: const Icon(Icons.wc),
@@ -193,11 +187,13 @@ class _TelaPerfilState extends State<TelaPerfil> {
                         ),
                       ),
                       items: ['Masculino', 'Feminino', 'Outro']
-                          .map((g) =>
-                              DropdownMenuItem(value: g, child: Text(g)))
+                          .map(
+                            (g) => DropdownMenuItem(value: g, child: Text(g)),
+                          )
                           .toList(),
-                      onChanged:
-                          _isEditing ? (v) => setState(() => _selectedGender = v!) : null,
+                      onChanged: _isEditing
+                          ? (v) => setState(() => _selectedGender = v!)
+                          : null,
                     ),
                   ),
                 ],
@@ -212,7 +208,8 @@ class _TelaPerfilState extends State<TelaPerfil> {
                       icon: Icons.monitor_weight,
                       enabled: _isEditing,
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true),
+                        decimal: true,
+                      ),
                       suffixText: 'kg',
                       onChanged: (_) => setState(() {}),
                     ),
@@ -226,9 +223,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                       enabled: _isEditing,
                       keyboardType: TextInputType.number,
                       suffixText: 'cm',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       onChanged: (_) => setState(() {}),
                     ),
                   ),
@@ -243,7 +238,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
             title: 'Objetivos',
             children: [
               DropdownButtonFormField<String>(
-                value: _selectedGoal,
+                initialValue: _selectedGoal,
                 decoration: InputDecoration(
                   labelText: 'Meta',
                   prefixIcon: const Icon(Icons.flag),
@@ -261,12 +256,13 @@ class _TelaPerfilState extends State<TelaPerfil> {
                 items: _goals
                     .map((g) => DropdownMenuItem(value: g, child: Text(g)))
                     .toList(),
-                onChanged:
-                    _isEditing ? (v) => setState(() => _selectedGoal = v!) : null,
+                onChanged: _isEditing
+                    ? (v) => setState(() => _selectedGoal = v!)
+                    : null,
               ),
               const SizedBox(height: 14),
               DropdownButtonFormField<String>(
-                value: _selectedActivity,
+                initialValue: _selectedActivity,
                 decoration: InputDecoration(
                   labelText: 'Nível de atividade',
                   prefixIcon: const Icon(Icons.directions_run),
@@ -306,9 +302,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                       enabled: _isEditing,
                       keyboardType: TextInputType.number,
                       suffixText: 'kcal',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -320,9 +314,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                       enabled: _isEditing,
                       keyboardType: TextInputType.number,
                       suffixText: 'g',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                   ),
                 ],
@@ -403,7 +395,7 @@ class _SectionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -433,11 +425,7 @@ class _BmiCard extends StatelessWidget {
   final String label;
   final Color color;
 
-  const _BmiCard({
-    required this.bmi,
-    required this.label,
-    required this.color,
-  });
+  const _BmiCard({required this.bmi, required this.label, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -448,7 +436,7 @@ class _BmiCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -460,7 +448,7 @@ class _BmiCard extends StatelessWidget {
             width: 70,
             height: 70,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Center(

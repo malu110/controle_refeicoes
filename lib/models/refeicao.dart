@@ -1,64 +1,69 @@
 class Refeicao {
-  final String id;
-  final String name;
-  final String description;
-  final String category;
-  final int calories;
-  final double proteins;
-  final double carbs;
-  final double fats;
-  final String imageEmoji;
-  final DateTime dateTime;
-  final String? local;
-  final double? avaliacao;
+  int? id;
+  String nome;
+  String descricao;
+  int calorias;
+  double proteinas;
+  double carboidratos;
+  double gorduras;
+  String dataRefeicao;
+  String local;
+  int avaliacao;
 
   Refeicao({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.category,
-    required this.calories,
-    required this.proteins,
-    required this.carbs,
-    required this.fats,
-    required this.imageEmoji,
-    required this.dateTime,
-    this.local,
-    this.avaliacao,
+    this.id,
+    required this.nome,
+    required this.descricao,
+    required this.calorias,
+    required this.proteinas,
+    required this.carboidratos,
+    required this.gorduras,
+    required this.dataRefeicao,
+    required this.local,
+    required this.avaliacao,
   });
+
+  factory Refeicao.fromMap(Map<String, dynamic> map) {
+    return Refeicao(
+      id: map['id'] as int?,
+      nome: map['nome'] as String? ?? '',
+      descricao: map['descricao'] as String? ?? '',
+      calorias: _intFromValue(map['calorias']),
+      proteinas: _doubleFromValue(map['proteinas']),
+      carboidratos: _doubleFromValue(map['carboidratos']),
+      gorduras: _doubleFromValue(map['gorduras']),
+      dataRefeicao: map['data_refeicao'] as String? ?? '',
+      local: map['local'] as String? ?? '',
+      avaliacao: _intFromValue(map['avaliacao']).clamp(1, 5),
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'category': category,
-      'calories': calories,
-      'proteins': proteins,
-      'carbs': carbs,
-      'fats': fats,
-      'imageEmoji': imageEmoji,
-      'dateTime': dateTime.toIso8601String(),
+      if (id != null) 'id': id,
+      'nome': nome,
+      'descricao': descricao,
+      'calorias': calorias,
+      'proteinas': proteinas,
+      'carboidratos': carboidratos,
+      'gorduras': gorduras,
+      'data_refeicao': dataRefeicao,
       'local': local,
       'avaliacao': avaliacao,
     };
   }
 
-  factory Refeicao.fromJson(Map<String, dynamic> json) {
-    return Refeicao(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'] ?? '',
-      category: json['category'],
-      calories: json['calories'],
-      // Conversão segura para double para evitar erros de JSON
-      proteins: (json['proteins'] as num).toDouble(),
-      carbs: (json['carbs'] as num).toDouble(),
-      fats: (json['fats'] as num).toDouble(),
-      imageEmoji: json['imageEmoji'],
-      dateTime: DateTime.parse(json['dateTime']),
-      local: json['local'],
-      avaliacao: json['avaliacao'] != null ? (json['avaliacao'] as num).toDouble() : null,
-    );
+  static int _intFromValue(dynamic value) {
+    if (value is int) return value;
+    if (value is double) return value.round();
+    if (value is String) return int.tryParse(value) ?? 0;
+    return 0;
+  }
+
+  static double _doubleFromValue(dynamic value) {
+    if (value is int) return value.toDouble();
+    if (value is double) return value;
+    if (value is String) return double.tryParse(value) ?? 0;
+    return 0;
   }
 }
